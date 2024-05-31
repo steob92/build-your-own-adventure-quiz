@@ -1,0 +1,3 @@
+{
+    "func": "def my_test(a, b):\n\timport time\n\ttime.sleep(1)\n\treturn a + b\n"
+}
