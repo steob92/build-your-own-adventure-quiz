@@ -39,7 +39,7 @@ class Question():
 
         try:
             assert(input == self.solution)
-            return (True, self.solution_string)
+            return (True, self.solution_string, "")
         
         except AssertionError as err_msg:
             return (False, self.error_string, err_msg)
