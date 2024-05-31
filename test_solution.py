@@ -3,6 +3,8 @@ from question.function_1 import FunctionQuestion
 
 my_function = """
 def my_test(a, b):
+    import time
+    time.sleep(10)
     return a + b
 """
 

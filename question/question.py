@@ -1,13 +1,16 @@
-import subprocess
+import multiprocessing
+import multiprocessing.spawn
 import tempfile 
 from importlib.util import spec_from_file_location, module_from_spec
 import sys
 import os
+import time
 
 class Question():
 
     def __init__(self):
 
+        self.TIMEOUT = 5
         self.about = ""
         self.info = """
     This is an info string    
@@ -49,7 +52,6 @@ class Question():
         # Step 1: Create a temporary Python file
         with tempfile.NamedTemporaryFile(suffix=".py", delete=False, mode="w") as temp:
             # Step 2: Write the Python code to the temporary file
-            # temp.write("def temporary_function():\n")
             temp.write(input)  # Use 4 spaces for indentation
 
             temp_file_path = temp.name
@@ -63,11 +65,42 @@ class Question():
                 spec.loader.exec_module(temporary_module)
 
                 # Call the function from the temporary module
-                result = temporary_module.my_test(*self.test_args)
+                with multiprocessing.Pool(1) as pool:
+                    # p = pool.map_async(temporary_module.my_test, self.test_args)
+                    # Create a Queue to get the result from the child process
+                    queue = multiprocessing.Queue()
+
+                    # Define a wrapper function to call the test function and put the result in the queue
+                    def wrapper(queue, *args):
+                        result = temporary_module.my_test(*args)
+                        queue.put(result)
+
+                    # Start the process
+                    p = multiprocessing.Process(target=wrapper, args=(queue, *self.test_args))
+                    p.start()
+                    t = 0
+                    exit_success = False
+                    while t < self.TIMEOUT:
+                        if p.is_alive():
+                            time.sleep(0.1)
+                            t += 0.1
+                        else:
+                            exit_success = True
+                            break
+
+                    if exit_success:
+                        # Get the result from the queue
+                        result = queue.get()
+                        return self.test_answer(result)
+                    else:
+                        # Timeout handling
+                        p.terminate()
+                        raise TimeoutError("Program took too long!")
+
 
                 # Test the answer
-                stuff = self.test_answer(result)
-                return stuff
+                # should be ran as a subprocess
+                # stuff = subprocess.run(self.test_answer(result))
             else:
                 raise ImportError("Could not load temporary module")
         finally:
