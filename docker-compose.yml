@@ -1,0 +1,26 @@
+version: "3"
+
+networks:
+  tube_net:
+    driver: bridge
+
+
+services:
+  
+  web:
+    container_name: web_server
+    build:
+      context: ./django_dir
+      dockerfile: dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - tube_net
+
+  question_server:
+    container_name: question_server
+    build:
+      context: ./question_server
+      dockerfile: dockerfile
+    networks:
+      - tube_net
