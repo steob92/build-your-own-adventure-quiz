@@ -1,0 +1,33 @@
+-   model: sim.quiz
+    pk: 1
+    fields:
+      name: Fundamental Data Types
+-   model: sim.question
+    pk: 1
+    fields:
+      quiz: 1
+      text: What Python data type is 'foo'?
+-   model: sim.answer
+    pk: 1
+    fields:
+      question: 1
+      text: int
+      is_correct: false
+-   model: sim.answer
+    pk: 2
+    fields:
+      question: 1
+      text: float
+      is_correct: false
+-   model: sim.answer
+    pk: 3
+    fields:
+      question: 1
+      text: list
+      is_correct: false
+-   model: sim.answer
+    pk: 4
+    fields:
+      question: 1
+      text: str
+      is_correct: true
