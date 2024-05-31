@@ -8,7 +8,7 @@
     <h1>Create a new QuizTaker</h1>
     <form method="post">
         {% csrf_token %}
-        {{ user_form.as_p }}
+        {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
 </body>
