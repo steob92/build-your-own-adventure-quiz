@@ -7,6 +7,7 @@ urlpatterns = [
   path('get-questions', views.get_questions, {'is_start': False}, name='get-questions'),
   path('get-answer', views.get_answer, name='get-answer'),
   path('get-finish', views.get_finish, name='get-finish'),
+  path('create-quiztaker/', views.create_quiztaker, name='create_quiztaker')
 ]
 
 
