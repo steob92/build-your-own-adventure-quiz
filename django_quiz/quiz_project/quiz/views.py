@@ -17,3 +17,14 @@ def take_quiz(request, quiz_id):
                 score += 1
         return render(request, 'quiz/quiz_result.html', {'quiz': quiz, 'score': score, 'total': len(questions)})
     return render(request, 'quiz/take_quiz.html', {'quiz': quiz, 'questions': questions})
+
+def create_quiztaker(request):
+    if request.method == 'POST':
+        form = QuizTakerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect('success'):
+    else:
+        form = QuizTakerForm()
+    
+    return render(request, 'create_quiztaker.html', {'form': form})
