@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1.4
+
+FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
+EXPOSE 8000
+WORKDIR /app 
+COPY requirements.txt /app
+RUN pip3 install -r requirements.txt --no-cache-dir
+COPY . /app 
+USER daemon
+RUN chown -R /app daemon
+RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate
+RUN python3 manage.py loaddata quiz_data.yaml
+ENTRYPOINT ["python3"] 
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]

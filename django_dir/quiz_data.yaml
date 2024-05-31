@@ -11,19 +11,19 @@
     pk: 1
     fields:
       question: 1
-      text: int
+      text: Integer
       is_correct: false
 -   model: sim.answer
     pk: 2
     fields:
       question: 1
-      text: float
+      text: Float
       is_correct: false
 -   model: sim.answer
     pk: 3
     fields:
       question: 1
-      text: list
+      text: List
       is_correct: false
 -   model: sim.answer
     pk: 4
@@ -59,4 +59,28 @@
     fields:
       question: 2
       text: str
+      text: If you wanted to find a unique element in a large dataset, which data structure's features will most help out?
+-   model: sim.answer
+    pk: 9
+    fields:
+      question: 3
+      text: Set
+      is_correct: true
+-   model: sim.answer
+    pk: 10
+    fields:
+      question: 3
+      text: List
+      is_correct: false
+-   model: sim.answer
+    pk: 11
+    fields:
+      question: 3
+      text: Array
+      is_correct: false
+-   model: sim.answer
+    pk: 12
+    fields:
+      question: 3
+      text: Linked Lists
       is_correct: false
