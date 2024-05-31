@@ -4,7 +4,7 @@ from django.db.models import Count
 from .models import Quiz, Question, Answer
 from django.core.paginator import Paginator
 from typing import Optional
-
+from .forms import QuizTakerForm
 
 def start_quiz_view(request) -> HttpResponse:
   topics = Quiz.objects.all().annotate(questions_count=Count('question'))
@@ -89,7 +89,13 @@ def _reset_quiz(request) -> HttpRequest:
     del request.session['score']
   return request
 
-
-
-
-
+def create_quiztaker(request):
+    if request.method == 'POST':
+        form = QuizTakerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect('success'):
+    else:
+        form = QuizTakerForm()
+    
+    return render(request, 'create_quiztaker.html', {'form': form})

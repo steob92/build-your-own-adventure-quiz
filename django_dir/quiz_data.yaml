@@ -29,34 +29,58 @@
     pk: 4
     fields:
       question: 1
-      text: String
+      text: str
       is_correct: true
 -   model: sim.question
     pk: 2
     fields:
       quiz: 1
-      text: If you wanted to find a unique element in a large dataset, which data structure's features will most help out?
+      text: What Python data type is 3.1415926?
 -   model: sim.answer
-    pk: 21
+    pk: 5
     fields:
       question: 2
+      text: int
+      is_correct: false
+-   model: sim.answer
+    pk: 6
+    fields:
+      question: 2
+      text: float
+      is_correct: true
+-   model: sim.answer
+    pk: 7
+    fields:
+      question: 2
+      text: list
+      is_correct: false
+-   model: sim.answer
+    pk: 8
+    fields:
+      question: 2
+      text: str
+      text: If you wanted to find a unique element in a large dataset, which data structure's features will most help out?
+-   model: sim.answer
+    pk: 9
+    fields:
+      question: 3
       text: Set
       is_correct: true
 -   model: sim.answer
-    pk: 22
+    pk: 10
     fields:
-      question: 2
+      question: 3
       text: List
       is_correct: false
 -   model: sim.answer
-    pk: 23
+    pk: 11
     fields:
-      question: 2
+      question: 3
       text: Array
       is_correct: false
 -   model: sim.answer
-    pk: 24
+    pk: 12
     fields:
-      question: 2
+      question: 3
       text: Linked Lists
       is_correct: false
