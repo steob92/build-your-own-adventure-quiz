@@ -1,0 +1,11 @@
+        
+about : "In this section we'll test the input to a function"
+info : "Write a function to add two numbers together and return the result"
+help : "We're expection a function that takes in two arguements and returns one value"    
+solution : 5.2
+test_args : 
+  -2.1
+  -3.1
+solution_string : "Congratulations! You've passed the test"
+error_string : "Sorry this isn't the correct answer... Expected answer: 5.2"
+common_errors : "None"
