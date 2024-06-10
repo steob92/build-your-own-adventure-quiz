@@ -5,11 +5,67 @@ from importlib.util import spec_from_file_location, module_from_spec
 import sys
 import os
 import time
+import yaml
+
+
+def question_from_dict(question_dict):
+    new_question = Question()
+    new_question.name = question_dict['name']
+    new_question.about = question_dict['about']
+    new_question.info = question_dict['info']
+    new_question.help = question_dict['help']
+    new_question.solution = question_dict['solution']
+    new_question.solution_string = question_dict['solution_string']
+    new_question.error_string = question_dict['error_string']
+    new_question.test_args = question_dict['test_args']
+    if 'TIMEOUT' not in question_dict:
+        new_question.TIMEOUT = 5
+    else:
+        new_question.TIMEOUT = question_dict['TIMEOUT']
+    if "common_errors" not in question_dict:
+        new_question.common_errors = ""
+    else:
+        new_question.common_errors = question_dict['common_errors']
+    return new_question
+
+def question_from_yaml(yaml_file):
+    new_question = Question()
+    
+    with open(yaml_file, 'r') as stream:
+        try:
+            question_dict = yaml.safe_load(stream)
+            new_question.name = question_dict['name']
+            new_question.about = question_dict['about']
+            new_question.info = question_dict['info']
+            new_question.help = question_dict['help']
+            new_question.solution = question_dict['solution']
+            new_question.solution_string = question_dict['solution_string']
+            new_question.error_string = question_dict['error_string']
+            new_question.test_args = question_dict['test_args']
+            if 'TIMEOUT' not in question_dict:
+                new_question.TIMEOUT = 5
+            else:
+                new_question.TIMEOUT = question_dict['TIMEOUT']
+            if "common_errors" not in question_dict:
+                new_question.common_errors = ""
+            else:
+                new_question.common_errors = question_dict['common_errors']
+        except yaml.YAMLError as exc:
+            print(exc)
+    return new_question
+
+def load_questions_from_dir(directory):
+    questions = {}
+    for filename in os.listdir(directory):
+        if filename.endswith(".yaml"):
+            qname = filename.split("/")[-1].split(".")[0]
+            questions[qname] = question_from_yaml(os.path.join(directory, filename))
+    return questions
 
 class Question():
 
     def __init__(self):
-
+        self.name = "tmp_question"
         self.TIMEOUT = 5
         self.about = ""
         self.info = """
@@ -31,21 +87,22 @@ class Question():
 """
         self.test_args = ()
 
-        self.__common_errors__ = """
+        self.common_errors = """
     This is an message with some common errors that are expected
 """
 
     def test_answer(self, input):
 
+        test_solution = type(input)(self.solution)
         try:
-            assert(input == self.solution)
+            assert(input == test_solution)
             return (True, self.solution_string, "")
         
         except AssertionError as err_msg:
             return (False, self.error_string, err_msg)
         
         except ImportError as err_msg:
-            print (self.__common_errors__)
+            print (self.common_errors)
             return (False, self.error_string, err_msg)
 
     def run_answer(self, input):
@@ -91,6 +148,7 @@ class Question():
                     if exit_success:
                         # Get the result from the queue
                         result = queue.get()
+                        print (result, type(result))    
                         return self.test_answer(result)
                     else:
                         # Timeout handling
