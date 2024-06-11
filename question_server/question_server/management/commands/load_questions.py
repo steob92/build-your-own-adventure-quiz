@@ -42,6 +42,7 @@ def question_from_yaml(yaml_file):
             new_question.solution_string = question_dict['solution_string']
             new_question.error_string = question_dict['error_string']
             new_question.test_args = question_dict['test_args']
+            new_question.imports = question_dict['imports']
             if 'TIMEOUT' not in question_dict:
                 new_question.TIMEOUT = 5
             else:

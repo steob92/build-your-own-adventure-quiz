@@ -47,6 +47,7 @@ def question_detail(request, question_name):
             'error_string': question.error_string,
             'test_args': question.test_args,
             'TIMEOUT': question.TIMEOUT,
+            'imports': question.imports,
             'common_errors': question.common_errors,
         }
         if request.method == 'GET':
@@ -54,12 +55,12 @@ def question_detail(request, question_name):
             return JsonResponse(data)
         elif request.method == 'POST':
 
-            print ("Here is the request body: ", request.body)
+            # print ("Here is the request body: ", request.body)
             test_question = question_from_dict(data)
 
             q_data = json.loads(request.body)
             func_string = q_data.get('user_input', 'No message provided')
-            print (func_string)
+            # print (func_string)
             res = test_question.run_answer(func_string)
             res = {"status" : res[0], "message" : res[1], "exception" : res[2] }
             print (res)
