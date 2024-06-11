@@ -11,6 +11,7 @@ class Question(models.Model):
     test_args = models.JSONField()
     TIMEOUT = models.IntegerField()
     common_errors = models.JSONField()
+    imports = models.TextField()
 
     def __str__(self):
         return self.about
