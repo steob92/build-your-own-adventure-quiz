@@ -22,5 +22,7 @@ services:
     build:
       context: ./question_server
       dockerfile: dockerfile
+    volumes:
+      - ./question_server/question_server/yaml_questions/:/app/question_server_yaml
     networks:
       - tube_net

@@ -12,4 +12,4 @@ USER daemon
 # ENTRYPOINT ["python3"] 
 
 # CMD ["manage.py", "runserver", "0.0.0.0:8756"]
-CMD ["sh", "-c", "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py load_questions /app/question_server/yaml_questions && python3 manage.py runserver 0.0.0.0:8756"]
+CMD ["sh", "-c", "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py load_questions /app/question_server_yaml && python3 manage.py runserver 0.0.0.0:8756"]
